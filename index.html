@@ -1,102 +1,113 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FINORA - Global Store</title>
-<link rel="alternate" hreflang="ar" href="?lang=ar">
-<link rel="alternate" hreflang="fr" href="?lang=fr">
-<link rel="alternate" hreflang="en" href="?lang=en">
+<title>FINORA STORE - أدوات المطبخ والمنزل</title>
 <style>
-:root{--main:#0f6e58}
-*{box-sizing:border-box;margin:0;padding:0;font-family:Inter,system-ui}
-body{background:#f8f9fa}
-header{background:#111;color:#fff;padding:14px;position:sticky;top:0;z-index:100}
-.nav{max-width:1200px;margin:auto;display:flex;justify-content:space-between;align-items:center}
-.langs button{background:#222;color:#fff;border:1px solid #333;padding:6px 10px;border-radius:8px;margin-left:4px;cursor:pointer}
-.langs button.active{background:var(--main)}
-.hero{max-width:1200px;margin:14px auto;background:#fff;padding:14px;border-radius:14px;text-align:center}
-.cats{max-width:1200px;margin:auto;display:flex;gap:8px;padding:0 14px;overflow:auto}
-.cat{padding:8px 14px;background:#fff;border:1px solid #ddd;border-radius:20px;cursor:pointer;white-space:nowrap}
-.cat.active{background:var(--main);color:#fff}
-.grid{max-width:1200px;margin:14px auto;padding:0 14px;display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
-.card{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 6px 16px rgba(0,0,0,.06)}
-.card img{width:100%;height:190px;object-fit:cover}
-.body{padding:10px}
-.price{font-weight:900;color:var(--main);margin:6px 0}
-.buy{display:block;background:var(--main);color:#fff;text-align:center;padding:10px;border-radius:8px;text-decoration:none;font-weight:700}
-.note{max-width:1200px;margin:20px auto;background:#e8f5f1;padding:12px;border-radius:10px;font-size:13px}
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui}
+body{background:#f5f3f0;color:#222}
+header{background:#fff;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 10px rgba(0,0,0,.05);position:sticky;top:0;z-index:10}
+.logo{font-weight:900;letter-spacing:1px}
+.langs button{border:1px solid #ddd;background:#fff;padding:5px 10px;border-radius:6px;cursor:pointer;margin-left:4px}
+.langs button.active{background:#222;color:#fff}
+.hero{background:#e9e6e2;padding:28px 20px;text-align:center}
+.hero h1{font-size:22px;margin-bottom:6px}
+.hero p{font-size:13px;color:#666}
+.btns{margin-top:12px}
+.btns a{display:inline-block;padding:8px 16px;border-radius:20px;text-decoration:none;font-size:13px;margin:4px}
+.btn-dark{background:#222;color:#fff}
+.btn-light{background:#fff;color:#222;border:1px solid #222}
+.section{max-width:1100px;margin:auto;padding:20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+.card{background:#fff;border-radius:12px;overflow:hidden;padding-bottom:10px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,.05)}
+.card img{width:100%;height:150px;object-fit:cover;background:#eee}
+.card h3{font-size:13px;margin:8px 6px;height:32px;overflow:hidden}
+.card .price{font-weight:800;margin:4px 0}
+.add{background:#222;color:#fff;border:none;padding:7px 14px;border-radius:20px;font-size:12px;cursor:pointer;text-decoration:none;display:inline-block}
+.search{max-width:400px;margin:10px auto;display:flex}
+.search input{flex:1;padding:8px 12px;border:1px solid #ddd;border-radius:20px}
 </style>
 </head>
 <body>
 <header>
-<div class="nav">
-<div id="storeName">FINORA</div>
+<div class="logo">FINORA<br><span style="font-size:11px;font-weight:400">STORE</span></div>
 <div class="langs">
-<button onclick="setLang('ar')" id="b-ar">AR</button>
-<button onclick="setLang('fr')" id="b-fr">FR</button>
-<button onclick="setLang('en')" id="b-en">EN</button>
-</div>
+<button class="active" onclick="setLang('ar')">AR</button>
+<button onclick="setLang('fr')">FR</button>
+<button onclick="setLang('en')">EN</button>
 </div>
 </header>
 <div class="hero">
-<h2 id="slogan"></h2>
-<p id="shipping" style="font-size:12px;color:#666;margin-top:6px"></p>
-<p id="howToBuy" style="font-size:12px;color:#888;margin-top:6px"></p>
+<h1 id="hTitle">أدوات المطبخ - المنزل - الديكور</h1>
+<p id="hSub">نختار لك أفضل المنتجات العصرية - جودة عالية و عملية</p>
+<p style="font-size:11px;margin-top:8px;color:#888">Free shipping over €50 • 30-day returns • Secure checkout</p>
 </div>
-<div class="cats">
-<div class="cat active" data-cat="all" id="cat-all" onclick="filterCat('all')"></div>
-<div class="cat" data-cat="kitchen" id="cat-kitchen" onclick="filterCat('kitchen')"></div>
-<div class="cat" data-cat="home" id="cat-home" onclick="filterCat('home')"></div>
-<div class="cat" data-cat="decor" id="cat-decor" onclick="filterCat('decor')"></div>
-</div>
+<div class="section">
+<div class="search"><input id="search" placeholder="Search products... بحث..." oninput="filterSearch(this.value)"></div>
+<h3 id="feat" style="margin:14px 0">المنتجات المميزة</h3>
 <div class="grid" id="grid"></div>
-<div class="note" id="note"></div>
-<script src="lang.js"></script>
-<script src="products.js"></script>
+</div>
 <script>
-let curLang = localStorage.getItem('finora_lang') || 'ar';
-let curCat = 'all';
+// === هنا كتزيد منتجاتك - غير بدل الصورة والرابط ===
+const products = [
+{
+  id:1,
+  img:"https://ma.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/61/149166/1.jpg?66114961",
+  title:{ar:"قطاعة خضار 12 في 1", fr:"Hachoir Legume 12 en 1", en:"Manual Kitchen Chopper 12 in 1"},
+  desc:{ar:"عملية وسهلة التنظيف", fr:"Compact facile à nettoyer", en:"Compact, easy to clean"},
+  price:"12 يورو / 79 درهم",
+  link:"https://www.jumia.ma/catalog/product/61/149166/1.jpg?66114961.html?s=KKjP8gG"
+},
+{
+  id:2,
+  img:"https://images.unsplash.com/photo-1563861826100-9cb868fdbe1c?w=400",
+  title:{ar:"ساعة حائط عصرية", fr:"Horloge Murale Minimaliste", en:"Minimalist Wall Clock"},
+  desc:{ar:"صامتة 30 سم", fr:"Silencieux 30cm", en:"Silent 30cm"},
+  price:"18 يورو / 149 درهم",
+  link:"https://jma.io/tgHEVsj"
+},
+{
+  id:3,
+  img:"https://images.unsplash.com/photo-1590794056226-79ef2a814047?w=400",
+  title:{ar:"رف توابل خشب 12 علبة", fr:"Étagère à épices Bambou", en:"Bamboo Spice Rack (6 Jars)"},
+  desc:{ar:"خشب طبيعي منظم", fr:"Rangement organisé", en:"Organised storage bamboo"},
+  price:"15 يورو / 129 درهم",
+  link:"https://jma.io/tgHEVsj"
+}
+];
+
+let curLang='ar';
+const t={
+ar:{feat:"المنتجات المميزة",title:"أدوات المطبخ - المنزل - الديكور",sub:"نختار لك أفضل المنتجات العصرية - جودة عالية و عملية",buy:"اشتر الآن"},
+fr:{feat:"Produits Vedettes",title:"Modern Homeware & Kitchen Tools",sub:"Curated essentials for your kitchen & home",buy:"Acheter"},
+en:{feat:"Featured Products",title:"Modern Homeware & Kitchen Tools",sub:"Curated essentials for your kitchen & home — simple, functional, beautiful.",buy:"Add to Cart"}
+};
 function setLang(l){
- curLang=l; localStorage.setItem('finora_lang',l); applyLang(); render();
- document.querySelectorAll('.langs button').forEach(b=>b.classList.remove('active'));
- document.getElementById('b-'+l).classList.add('active');
+curLang=l;
+document.querySelectorAll('.langs button').forEach(b=>b.classList.remove('active'));
+event.target.classList.add('active');
+document.documentElement.dir = l==='ar'?'rtl':'ltr';
+document.getElementById('feat').textContent=t[l].feat;
+document.getElementById('hTitle').textContent=t[l].title;
+document.getElementById('hSub').textContent=t[l].sub;
+render(products);
 }
-function applyLang(){
- const t=translations[curLang];
- document.documentElement.lang=curLang; document.documentElement.dir=t.dir;
- document.getElementById('storeName').textContent=t.storeName;
- document.getElementById('slogan').textContent=t.slogan;
- document.getElementById('shipping').textContent=t.shipping;
- document.getElementById('howToBuy').textContent=t.howToBuy;
- document.getElementById('cat-all').textContent=t.all;
- document.getElementById('cat-kitchen').textContent=t.kitchen;
- document.getElementById('cat-home').textContent=t.home;
- document.getElementById('cat-decor').textContent=t.decor;
+function render(list){
+document.getElementById('grid').innerHTML=list.map(p=>`
+<div class="card">
+<img src="${p.img}" onerror="this.src='https://via.placeholder.com/300'">
+<h3>${p.title[curLang]}</h3>
+<div style="font-size:11px;color:#777">${p.desc[curLang]}</div>
+<div class="price">${p.price}</div>
+<a class="add" href="${p.link}" target="_blank">${t[curLang].buy}</a>
+</div>`).join('');
 }
-function getLink(p){
- // إلا الزائر مغربي نعطيه جوميا، إلا أجنبي نعطيه AliExpress/Amazon
- const isMA = Intl.DateTimeFormat().resolvedOptions().timeZone.includes('Casablanca') || curLang==='ar';
- return isMA && p.links.ma ? p.links.ma : (p.links.world || p.links.ma);
+function filterSearch(q){
+const f=products.filter(p=>p.title[curLang].toLowerCase().includes(q.toLowerCase()));
+render(f);
 }
-function render(){
- const t=translations[curLang];
- let list = curCat==='all' ? products : products.filter(p=>p.category===curCat);
- document.getElementById('grid').innerHTML = list.map(p=>`
-  <div class="card">
-   <img src="${p.image}">
-   <div class="body">
-    <div style="font-size:13px;height:34px;overflow:hidden">${p.title[curLang]}</div>
-    <div class="price">${curLang==='ar' ? p.priceMAD+' MAD' : '$'+p.priceUSD}</div>
-    <a class="buy" href="${getLink(p)}" target="_blank">${t.buy}</a>
-   </div>
-  </div>
- `).join('');
-}
-function filterCat(c){
- curCat=c; document.querySelectorAll('.cat').forEach(el=>el.classList.toggle('active', el.dataset.cat===c)); render();
-}
-setLang(curLang);
+render(products);
 </script>
 </body>
 </html>
