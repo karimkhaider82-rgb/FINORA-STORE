@@ -1,270 +1,102 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Discover smart watches, wireless earbuds and phone accessories at FINORA.">
-<title>FINORA | Smart Tech Store</title>
-
+<title>FINORA - Global Store</title>
+<link rel="alternate" hreflang="ar" href="?lang=ar">
+<link rel="alternate" hreflang="fr" href="?lang=fr">
+<link rel="alternate" hreflang="en" href="?lang=en">
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-  font-family: Arial, sans-serif;
-  background: #fff;
-  color: #171717;
-}
-
-header {
-  background: #101010;
-  color: white;
-  padding: 24px 15px;
-  text-align: center;
-}
-
-.logo {
-  font-size: 32px;
-  letter-spacing: 7px;
-  font-weight: bold;
-}
-
-.tagline {
-  color: #bbb;
-  font-size: 12px;
-  margin-top: 8px;
-  letter-spacing: 2px;
-}
-
-nav {
-  background: #202020;
-  padding: 15px 5px;
-  text-align: center;
-}
-
-nav a {
-  color: white;
-  text-decoration: none;
-  font-size: 13px;
-  margin: 0 12px;
-}
-
-.hero {
-  background: #111;
-  color: white;
-  text-align: center;
-  padding: 75px 18px;
-}
-
-.hero h1 {
-  font-size: 34px;
-  margin-bottom: 18px;
-}
-
-.hero p {
-  color: #bbb;
-  line-height: 1.7;
-  margin-bottom: 28px;
-}
-
-.btn {
-  display: inline-block;
-  background: white;
-  color: black;
-  padding: 14px 26px;
-  text-decoration: none;
-  font-weight: bold;
-  border-radius: 3px;
-}
-
-section {
-  padding: 55px 18px;
-  text-align: center;
-}
-
-.section-title {
-  font-size: 25px;
-  margin-bottom: 12px;
-}
-
-.subtitle {
-  color: #777;
-  font-size: 14px;
-  margin-bottom: 30px;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
-  max-width: 850px;
-  margin: auto;
-}
-
-.card {
-  border: 1px solid #eee;
-  padding: 25px 12px;
-  border-radius: 5px;
-  background: #fafafa;
-}
-
-.icon {
-  font-size: 48px;
-  margin-bottom: 18px;
-}
-
-.card h3 {
-  font-size: 16px;
-  margin-bottom: 10px;
-}
-
-.card p {
-  font-size: 12px;
-  color: #777;
-  line-height: 1.6;
-}
-
-.featured {
-  background: #f5f5f5;
-}
-
-.product {
-  background: white;
-  padding: 25px 12px;
-  border: 1px solid #eee;
-}
-
-.product .icon {
-  font-size: 45px;
-}
-
-.product span {
-  display: inline-block;
-  font-size: 11px;
-  color: #777;
-  margin-top: 12px;
-}
-
-.about {
-  background: #111;
-  color: white;
-}
-
-.about p {
-  color: #bbb;
-  max-width: 550px;
-  margin: 15px auto;
-  line-height: 1.8;
-}
-
-footer {
-  background: #090909;
-  color: #aaa;
-  text-align: center;
-  padding: 28px 12px;
-  font-size: 12px;
-}
-
-footer a {
-  color: white;
-}
-
-@media(max-width: 380px) {
-  .hero h1 { font-size: 27px; }
-  nav a { margin: 0 6px; }
-}
+:root{--main:#0f6e58}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Inter,system-ui}
+body{background:#f8f9fa}
+header{background:#111;color:#fff;padding:14px;position:sticky;top:0;z-index:100}
+.nav{max-width:1200px;margin:auto;display:flex;justify-content:space-between;align-items:center}
+.langs button{background:#222;color:#fff;border:1px solid #333;padding:6px 10px;border-radius:8px;margin-left:4px;cursor:pointer}
+.langs button.active{background:var(--main)}
+.hero{max-width:1200px;margin:14px auto;background:#fff;padding:14px;border-radius:14px;text-align:center}
+.cats{max-width:1200px;margin:auto;display:flex;gap:8px;padding:0 14px;overflow:auto}
+.cat{padding:8px 14px;background:#fff;border:1px solid #ddd;border-radius:20px;cursor:pointer;white-space:nowrap}
+.cat.active{background:var(--main);color:#fff}
+.grid{max-width:1200px;margin:14px auto;padding:0 14px;display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
+.card{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 6px 16px rgba(0,0,0,.06)}
+.card img{width:100%;height:190px;object-fit:cover}
+.body{padding:10px}
+.price{font-weight:900;color:var(--main);margin:6px 0}
+.buy{display:block;background:var(--main);color:#fff;text-align:center;padding:10px;border-radius:8px;text-decoration:none;font-weight:700}
+.note{max-width:1200px;margin:20px auto;background:#e8f5f1;padding:12px;border-radius:10px;font-size:13px}
 </style>
 </head>
-
 <body>
-
 <header>
-  <div class="logo">FINORA</div>
-  <div class="tagline">SMART TECH. SIMPLE LIFE.</div>
-</header>
-
-<nav>
-  <a href="#home">Home</a>
-  <a href="#categories">Categories</a>
-  <a href="#products">Products</a>
-  <a href="#about">About</a>
-</nav>
-
-<div class="hero" id="home">
-  <h1>Discover Smart Technology</h1>
-  <p>
-    Explore modern gadgets and smart accessories
-    designed to make everyday life better.
-  </p>
-  <a href="#categories" class="btn">Explore Collection</a>
+<div class="nav">
+<div id="storeName">FINORA</div>
+<div class="langs">
+<button onclick="setLang('ar')" id="b-ar">AR</button>
+<button onclick="setLang('fr')" id="b-fr">FR</button>
+<button onclick="setLang('en')" id="b-en">EN</button>
 </div>
-
-<section id="categories">
-  <h2 class="section-title">Shop By Category</h2>
-  <p class="subtitle">Explore our technology collections.</p>
-
-  <div class="grid">
-    <div class="card">
-      <div class="icon">⌚</div>
-      <h3>Smart Watches</h3>
-      <p>Discover smart style and everyday convenience.</p>
-    </div>
-
-    <div class="card">
-      <div class="icon">🎧</div>
-      <h3>Wireless Earbuds</h3>
-      <p>Enjoy wireless freedom and great sound.</p>
-    </div>
-
-    <div class="card">
-      <div class="icon">📱</div>
-      <h3>Phone Accessories</h3>
-      <p>Useful accessories for your smartphone.</p>
-    </div>
-
-    <div class="card">
-      <div class="icon">⚡</div>
-      <h3>Smart Gadgets</h3>
-      <p>Explore useful everyday technology.</p>
-    </div>
+</div>
+</header>
+<div class="hero">
+<h2 id="slogan"></h2>
+<p id="shipping" style="font-size:12px;color:#666;margin-top:6px"></p>
+<p id="howToBuy" style="font-size:12px;color:#888;margin-top:6px"></p>
+</div>
+<div class="cats">
+<div class="cat active" data-cat="all" id="cat-all" onclick="filterCat('all')"></div>
+<div class="cat" data-cat="kitchen" id="cat-kitchen" onclick="filterCat('kitchen')"></div>
+<div class="cat" data-cat="home" id="cat-home" onclick="filterCat('home')"></div>
+<div class="cat" data-cat="decor" id="cat-decor" onclick="filterCat('decor')"></div>
+</div>
+<div class="grid" id="grid"></div>
+<div class="note" id="note"></div>
+<script src="lang.js"></script>
+<script src="products.js"></script>
+<script>
+let curLang = localStorage.getItem('finora_lang') || 'ar';
+let curCat = 'all';
+function setLang(l){
+ curLang=l; localStorage.setItem('finora_lang',l); applyLang(); render();
+ document.querySelectorAll('.langs button').forEach(b=>b.classList.remove('active'));
+ document.getElementById('b-'+l).classList.add('active');
+}
+function applyLang(){
+ const t=translations[curLang];
+ document.documentElement.lang=curLang; document.documentElement.dir=t.dir;
+ document.getElementById('storeName').textContent=t.storeName;
+ document.getElementById('slogan').textContent=t.slogan;
+ document.getElementById('shipping').textContent=t.shipping;
+ document.getElementById('howToBuy').textContent=t.howToBuy;
+ document.getElementById('cat-all').textContent=t.all;
+ document.getElementById('cat-kitchen').textContent=t.kitchen;
+ document.getElementById('cat-home').textContent=t.home;
+ document.getElementById('cat-decor').textContent=t.decor;
+}
+function getLink(p){
+ // إلا الزائر مغربي نعطيه جوميا، إلا أجنبي نعطيه AliExpress/Amazon
+ const isMA = Intl.DateTimeFormat().resolvedOptions().timeZone.includes('Casablanca') || curLang==='ar';
+ return isMA && p.links.ma ? p.links.ma : (p.links.world || p.links.ma);
+}
+function render(){
+ const t=translations[curLang];
+ let list = curCat==='all' ? products : products.filter(p=>p.category===curCat);
+ document.getElementById('grid').innerHTML = list.map(p=>`
+  <div class="card">
+   <img src="${p.image}">
+   <div class="body">
+    <div style="font-size:13px;height:34px;overflow:hidden">${p.title[curLang]}</div>
+    <div class="price">${curLang==='ar' ? p.priceMAD+' MAD' : '$'+p.priceUSD}</div>
+    <a class="buy" href="${getLink(p)}" target="_blank">${t.buy}</a>
+   </div>
   </div>
-</section>
-
-<section class="featured" id="products">
-  <h2 class="section-title">Featured Products</h2>
-  <p class="subtitle">Our product selection is coming soon.</p>
-
-  <div class="grid">
-    <div class="product">
-      <div class="icon">⌚</div>
-      <h3>Smart Watch Collection</h3>
-      <span>Coming Soon</span>
-    </div>
-
-    <div class="product">
-      <div class="icon">🎧</div>
-      <h3>Wireless Audio Collection</h3>
-      <span>Coming Soon</span>
-    </div>
-  </div>
-</section>
-
-<section class="about" id="about">
-  <h2>About FINORA</h2>
-  <p>
-    FINORA helps you discover modern technology
-    and useful accessories. Our goal is to make
-    smart shopping simple and accessible.
-  </p>
-</section>
-
-<footer>
-  <p>© 2026 FINORA. All rights reserved.</p>
-  <p style="margin-top:12px;">
-    <a href="mailto:contact@example.com">Contact</a>
-  </p>
-  <p style="margin-top:12px;">Smart Tech. Simple Life.</p>
-</footer>
-
+ `).join('');
+}
+function filterCat(c){
+ curCat=c; document.querySelectorAll('.cat').forEach(el=>el.classList.toggle('active', el.dataset.cat===c)); render();
+}
+setLang(curLang);
+</script>
 </body>
 </html>
