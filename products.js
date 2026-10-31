@@ -20,12 +20,12 @@ const products = [
     category: "Kitchen Storage",
     image: "Black%20Wall-Mounted1.jpg",
     link: "https://jmia.io/oJf3tQF"
+  },
+  {
+    name: "50 Disposable Air Fryer Paper Liners",
+    description: "Non-stick disposable liners for air fryers. Easy to use and clean.",
+    category: "Kitchen Gadgets",
+    image: "air-fryer-liners.jpg",
+    link: "https://jmia.io/ND9RVRJ"
   }
-{
-  id: 4,
-  name: "50 Disposable Air Fryer Paper Liners",
-  category: "Kitchen Gadgets",
-  description: "Non-stick disposable liners for air fryers. Easy to use and clean.",
-  image: "air-fryer-liners.jpg",
-  link: "https://jmia.io/ND9RVRJ"
-}
+];
