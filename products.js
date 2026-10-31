@@ -1,25 +1,37 @@
+
 const products = [
   {
     id: 1,
-    category: "kitchen",
-    priceUSD: 12,
-    priceMAD: 79,
-    image: "https://... حط رابط الصورة هنا ...",
-    video: "", // رابط فيديو يوتيوب إلا عندك
+    category: "home",
+    priceUSD: null,
+    priceMAD: null,
+    image: "Blood%20Pressure1.jpg",
+    video: "",
     links: {
-      ma: "https://jma.io/tgHEVsj", // جوميا
-      world: "https://s.click.aliexpress.com/..." // علي إكسبريس
+      ma: "https://jmia.io/11QnCLJ",
+      world: ""
     },
-    title: { ar: "قطاعة خضار 12 في 1", fr: "Hachoir legume 12 en 1", en: "12 in 1 Vegetable Chopper" }
+    title: {
+      ar: "جهاز قياس ضغط الدم الرقمي",
+      fr: "Tensiomètre numérique",
+      en: "Digital Blood Pressure Monitor"
+    }
   },
   {
     id: 2,
     category: "decor",
-    priceUSD: 18,
-    priceMAD: 149,
-    image: "https://... صورة الساعة ...",
+    priceUSD: null,
+    priceMAD: null,
+    image: "Black%20Wall-Mounted1.jpg",
     video: "",
-    links: { ma: "https://jma.io/tgHEVsj", world: "https://amzn.to/..." },
-    title: { ar: "ساعة حائط ديكور عصري", fr: "Horloge murale moderne", en: "Modern Wall Clock Decor" }
+    links: {
+      ma: "https://jmia.io/oJf3tQF",
+      world: ""
+    },
+    title: {
+      ar: "رفوف زاوية سوداء للتخزين",
+      fr: "Étagères d'angle murales noires",
+      en: "Black Wall-Mounted Corner Storage Rack"
+    }
   }
 ];
