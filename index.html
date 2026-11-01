@@ -259,122 +259,166 @@ FINORA may earn a commission when you purchase through qualifying affiliate link
 </div>
 </div>
 
+
 <script src="products.js"></script>
 <script>
 "use strict";
 
-const grid=document.getElementById("productGrid");
-const search=document.getElementById("search");
-const filter=document.getElementById("categoryFilter");
-const empty=document.getElementById("empty");
-const modal=document.getElementById("productModal");
+const grid = document.getElementById("productGrid");
+const search = document.getElementById("search");
+const filter = document.getElementById("categoryFilter");
+const empty = document.getElementById("empty");
+const modal = document.getElementById("productModal");
 
-function renderProducts(){
-const q=search.value.toLowerCase().trim();
-const cat=filter.value;
-
-const result=products.filter(p=>{
-const text=(p.name+" "+p.description+" "+p.category).toLowerCase();
-return text.includes(q)&&(cat==="all"||p.category===cat);
-});
-
-empty.hidden=result.length>0;
-
-grid.innerHTML=result.map(p=>`
-<article class="card">
-<div class="card-image">
-<img src="${p.images[0]}" alt="${p.name}" loading="lazy">
-</div>
-<div class="card-body">
-<div class="tag">${p.category}</div>
-<h3>${p.name}</h3>
-<p>${p.shortDescription||p.description}</p>
-<button class="product-btn" onclick="openProduct('${p.id}')">
-VIEW DETAILS →
-</button>
-</div>
-</article>
-`).join("");
+function getImages(product) {
+  if (Array.isArray(product.images)) return product.images;
+  if (product.image) return [product.image];
+  return [];
 }
 
-function openProduct(id){
-const p=products.find(item=>item.id===id);
-if(!p)return;
+function renderProducts() {
+  const q = search.value.toLowerCase().trim();
+  const cat = filter.value;
 
-document.getElementById("detailCategory").textContent=p.category;
-document.getElementById("detailName").textContent=p.name;
-document.getElementById("detailDescription").textContent=p.details;
-document.getElementById("detailPrice").textContent=
-p.price!==null&&p.price!==undefined?p.price:"";
+  const result = products.filter(p => {
+    const text = (
+      (p.name || "") + " " +
+      (p.description || "") + " " +
+      (p.category || "")
+    ).toLowerCase();
 
-document.getElementById("detailFeatures").innerHTML=
-(p.features||[]).map(f=>`<li>${f}</li>`).join("");
+    return text.includes(q) &&
+      (cat === "all" || p.category === cat);
+  });
 
-const images=p.images||[];
-const main=document.getElementById("mainImage");
-const thumbs=document.getElementById("thumbnails");
+  empty.hidden = result.length > 0;
 
-function showImage(index){
-main.src=images[index];
-thumbs.querySelectorAll(".thumb").forEach((b,i)=>{
-b.classList.toggle("active",i===index);
-});
+  grid.innerHTML = result.map(p => {
+    const images = getImages(p);
+    const photo = images[0] || "";
+
+    return `
+      <article class="card">
+        <div class="card-image">
+          <img src="${photo}" alt="${p.name || "Product"}" loading="lazy">
+        </div>
+        <div class="card-body">
+          <div class="tag">${p.category || "Home Essentials"}</div>
+          <h3>${p.name || "Product"}</h3>
+          <p>${p.shortDescription || p.description || ""}</p>
+          <button class="product-btn"
+            onclick="openProduct('${p.id}')">
+            VIEW DETAILS →
+          </button>
+        </div>
+      </article>
+    `;
+  }).join("");
 }
 
-thumbs.innerHTML=images.map((src,i)=>`
-<button class="thumb ${i===0?"active":""}" onclick="showProductImage(${i})">
-<img src="${src}" alt="Product image ${i+1}">
-</button>
-`).join("");
+function openProduct(id) {
+  const p = products.find(item => item.id === id);
+  if (!p) return;
 
-window.showProductImage=showImage;
-if(images.length)showImage(0);
+  const images = getImages(p);
 
-const buy=document.getElementById("detailBuy");
-const whatsapp=document.getElementById("detailWhatsApp");
+  document.getElementById("detailCategory").textContent =
+    p.category || "";
 
-buy.href=p.link;
-buy.hidden=!p.link;
-buy.textContent=p.saleType==="direct"?"VIEW PRODUCT →":"BUY NOW →";
+  document.getElementById("detailName").textContent =
+    p.name || "";
 
-if(p.saleType==="direct"&&p.whatsapp){
-whatsapp.hidden=false;
-whatsapp.href="https://wa.me/"+p.whatsapp+"?text="+
-encodeURIComponent("Hello FINORA, I would like to order: "+p.name);
-}else{
-whatsapp.hidden=true;
+  document.getElementById("detailDescription").textContent =
+    p.details || p.description || "";
+
+  document.getElementById("detailPrice").textContent =
+    p.price !== null && p.price !== undefined ? p.price : "";
+
+  document.getElementById("detailFeatures").innerHTML =
+    (p.features || []).map(f => `<li>${f}</li>`).join("");
+
+  const main = document.getElementById("mainImage");
+  const thumbs = document.getElementById("thumbnails");
+
+  function showImage(index) {
+    if (!images[index]) return;
+
+    main.src = images[index];
+
+    thumbs.querySelectorAll(".thumb").forEach((button, i) => {
+      button.classList.toggle("active", i === index);
+    });
+  }
+
+  thumbs.innerHTML = images.map((src, i) => `
+    <button type="button"
+      class="thumb ${i === 0 ? "active" : ""}"
+      onclick="showProductImage(${i})">
+      <img src="${src}" alt="Product image ${i + 1}">
+    </button>
+  `).join("");
+
+  window.showProductImage = showImage;
+
+  if (images.length) {
+    showImage(0);
+  } else {
+    main.removeAttribute("src");
+  }
+
+  const buy = document.getElementById("detailBuy");
+  const whatsapp = document.getElementById("detailWhatsApp");
+
+  buy.href = p.link || "#";
+  buy.hidden = !p.link;
+  buy.textContent =
+    p.saleType === "direct" ? "VIEW PRODUCT →" : "BUY NOW →";
+
+  if (p.saleType === "direct" && p.whatsapp) {
+    whatsapp.hidden = false;
+    whatsapp.href =
+      "https://wa.me/" + p.whatsapp + "?text=" +
+      encodeURIComponent("Hello FINORA, I would like to order: " + p.name);
+  } else {
+    whatsapp.hidden = true;
+    whatsapp.removeAttribute("href");
+  }
+
+  modal.classList.add("show");
+  modal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
 }
 
-modal.classList.add("show");
-modal.setAttribute("aria-hidden","false");
-document.body.style.overflow="hidden";
+function closeProduct() {
+  modal.classList.remove("show");
+  modal.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
 }
 
-function closeProduct(){
-modal.classList.remove("show");
-modal.setAttribute("aria-hidden","true");
-document.body.style.overflow="";
+document.getElementById("closeModal")
+  .addEventListener("click", closeProduct);
+
+modal.addEventListener("click", e => {
+  if (e.target === modal) closeProduct();
+});
+
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") closeProduct();
+});
+
+search.addEventListener("input", renderProducts);
+filter.addEventListener("change", renderProducts);
+
+document.querySelectorAll(".category").forEach(item => {
+  item.addEventListener("click", () => {
+    filter.value = item.dataset.category;
+    renderProducts();
+  });
+});
+
+if (Array.isArray(products)) {
+  renderProducts();
 }
-
-document.getElementById("closeModal").addEventListener("click",closeProduct);
-modal.addEventListener("click",e=>{
-if(e.target===modal)closeProduct();
-});
-document.addEventListener("keydown",e=>{
-if(e.key==="Escape")closeProduct();
-});
-
-search.addEventListener("input",renderProducts);
-filter.addEventListener("change",renderProducts);
-
-document.querySelectorAll(".category").forEach(item=>{
-item.addEventListener("click",()=>{
-filter.value=item.dataset.category;
-renderProducts();
-});
-});
-
-if(Array.isArray(products))renderProducts();
 </script>
 </body>
 </html>
