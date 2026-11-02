@@ -260,7 +260,9 @@ FINORA may earn a commission when you purchase through qualifying affiliate link
 </div>
 
 
+
 <script src="products.js"></script>
+
 <script>
 "use strict";
 
@@ -270,20 +272,61 @@ const filter = document.getElementById("categoryFilter");
 const empty = document.getElementById("empty");
 const modal = document.getElementById("productModal");
 
-function getImages(product) {
-  if (Array.isArray(product.images)) return product.images;
-  if (product.image) return [product.image];
-  return [];
+let currentImages = [];
+
+function getImages(p) {
+  return Array.isArray(p.images)
+    ? p.images.filter(Boolean)
+    : p.image ? [p.image] : [];
 }
- 
+
+function renderProducts() {
+  if (typeof products === "undefined" || !Array.isArray(products)) {
+    grid.innerHTML = "<p>Unable to load products. Check products.js</p>";
+    return;
+  }
+
+  const q = search.value.toLowerCase().trim();
+  const cat = filter.value;
+
+  const result = products.filter(p => {
+    const text = [
+      p.name, p.description, p.category
+    ].join(" ").toLowerCase();
+
+    return text.includes(q) &&
+      (cat === "all" || p.category === cat);
+  });
+
+  empty.hidden = result.length > 0;
+
+  grid.innerHTML = result.map(p => `
+    <article class="card">
+      <div class="card-image">
+        <img src="${getImages(p)[0] || ''}"
+          alt="${p.name}" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="tag">${p.category}</div>
+        <h3>${p.name}</h3>
+        <p>${p.shortDescription || p.description}</p>
+        <button class="product-btn"
+          data-product-id="${p.id}">
+          VIEW DETAILS →
+        </button>
+      </div>
+    </article>
+  `).join("");
+}
+
 function openProduct(id) {
   const p = products.find(item => item.id === id);
   if (!p) return;
 
-  const images = getImages(p);
+  currentImages = getImages(p);
 
-  document.getElementById("detailCategory").textContent = p.category || "";
-  document.getElementById("detailName").textContent = p.name || "";
+  document.getElementById("detailCategory").textContent = p.category;
+  document.getElementById("detailName").textContent = p.name;
   document.getElementById("detailDescription").textContent =
     p.details || p.description || "";
 
@@ -297,24 +340,24 @@ function openProduct(id) {
   const thumbs = document.getElementById("thumbnails");
 
   function showImage(index) {
-    if (!images[index]) return;
-    main.src = images[index];
+    if (!currentImages[index]) return;
 
-    thumbs.querySelectorAll(".thumb").forEach((button, i) => {
-      button.classList.toggle("active", i === index);
+    main.src = currentImages[index];
+
+    thumbs.querySelectorAll(".thumb").forEach((b, i) => {
+      b.classList.toggle("active", i === index);
     });
   }
 
-  thumbs.innerHTML = images.map((src, i) => `
-    <button type="button" class="thumb ${i === 0 ? "active" : ""}"
-      onclick="showProductImage(${i})">
-      <img src="${src}" alt="Product image ${i + 1}">
+  thumbs.innerHTML = currentImages.map((src, i) => `
+    <button type="button"
+      class="thumb ${i === 0 ? "active" : ""}"
+      data-image-index="${i}">
+      <img src="${src}" alt="Product photo ${i + 1}">
     </button>
   `).join("");
 
-  window.showProductImage = showImage;
-
-  if (images.length) {
+  if (currentImages.length) {
     showImage(0);
   } else {
     main.removeAttribute("src");
@@ -325,8 +368,7 @@ function openProduct(id) {
 
   buy.href = p.link || "#";
   buy.hidden = !p.link;
-  buy.textContent =
-    p.saleType === "direct" ? "VIEW PRODUCT →" : "BUY NOW →";
+  buy.textContent = "BUY NOW →";
 
   whatsapp.hidden = true;
   whatsapp.removeAttribute("href");
@@ -334,13 +376,34 @@ function openProduct(id) {
   modal.classList.add("show");
   modal.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden";
-} // نهاية openProduct
+}
 
 function closeProduct() {
   modal.classList.remove("show");
   modal.setAttribute("aria-hidden", "true");
   document.body.style.overflow = "";
 }
+
+grid.addEventListener("click", e => {
+  const button = e.target.closest("[data-product-id]");
+  if (button) openProduct(button.dataset.productId);
+});
+
+document.getElementById("thumbnails").addEventListener("click", e => {
+  const button = e.target.closest("[data-image-index]");
+  if (!button) return;
+
+  const index = Number(button.dataset.imageIndex);
+  const main = document.getElementById("mainImage");
+
+  if (!currentImages[index]) return;
+
+  main.src = currentImages[index];
+
+  document.querySelectorAll(".thumb").forEach((b, i) => {
+    b.classList.toggle("active", i === index);
+  });
+});
 
 document.getElementById("closeModal")
   .addEventListener("click", closeProduct);
@@ -363,9 +426,7 @@ document.querySelectorAll(".category").forEach(item => {
   });
 });
 
-if (Array.isArray(products)) {
-  renderProducts();
-}
+renderProducts();
 </script>
 </body>
 </html>
