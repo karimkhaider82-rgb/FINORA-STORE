@@ -113,10 +113,10 @@ const products = [
     ],
     category: "Kitchen Gadgets",
     images: [
-      "Images/Vegetable Chopper1.jpg",
+      "Images/Sink Organizer.jpg",
       "Images/Vegetable Chopper2.jpg"
     ],
-    link: "https://jmia.io/JDmLDh4",
+    link: "https://jmia.io/tK2bz5O",
     saleType: "affiliate",
     price: null
   },
