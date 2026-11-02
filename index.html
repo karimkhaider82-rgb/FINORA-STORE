@@ -376,7 +376,11 @@ function openProduct(id) {
 
   whatsapp.hidden = true;
 whatsapp.removeAttribute("href");
-
+  
+modal.classList.add("show");
+modal.setAttribute("aria-hidden", "false");
+document.body.style.overflow = "hidden";
+  
 function closeProduct() {
   modal.classList.remove("show");
   modal.setAttribute("aria-hidden", "true");
