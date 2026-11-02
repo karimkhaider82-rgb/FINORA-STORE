@@ -374,20 +374,8 @@ function openProduct(id) {
   buy.textContent =
     p.saleType === "direct" ? "VIEW PRODUCT →" : "BUY NOW →";
 
-  if (p.saleType === "direct" && p.whatsapp) {
-    whatsapp.hidden = false;
-    whatsapp.href =
-      "https://wa.me/" + p.whatsapp + "?text=" +
-      encodeURIComponent("Hello FINORA, I would like to order: " + p.name);
-  } else {
-    whatsapp.hidden = true;
-    whatsapp.removeAttribute("href");
-  }
-
-  modal.classList.add("show");
-  modal.setAttribute("aria-hidden", "false");
-  document.body.style.overflow = "hidden";
-}
+  whatsapp.hidden = true;
+whatsapp.removeAttribute("href");
 
 function closeProduct() {
   modal.classList.remove("show");
