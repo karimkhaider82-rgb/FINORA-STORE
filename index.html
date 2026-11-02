@@ -275,64 +275,20 @@ function getImages(product) {
   if (product.image) return [product.image];
   return [];
 }
-
-function renderProducts() {
-  const q = search.value.toLowerCase().trim();
-  const cat = filter.value;
-
-  const result = products.filter(p => {
-    const text = (
-      (p.name || "") + " " +
-      (p.description || "") + " " +
-      (p.category || "")
-    ).toLowerCase();
-
-    return text.includes(q) &&
-      (cat === "all" || p.category === cat);
-  });
-
-  empty.hidden = result.length > 0;
-
-  grid.innerHTML = result.map(p => {
-    const images = getImages(p);
-    const photo = images[0] || "";
-
-    return `
-      <article class="card">
-        <div class="card-image">
-          <img src="${photo}" alt="${p.name || "Product"}" loading="lazy">
-        </div>
-        <div class="card-body">
-          <div class="tag">${p.category || "Home Essentials"}</div>
-          <h3>${p.name || "Product"}</h3>
-          <p>${p.shortDescription || p.description || ""}</p>
-          <button class="product-btn"
-            onclick="openProduct('${p.id}')">
-            VIEW DETAILS →
-          </button>
-        </div>
-      </article>
-    `;
-  }).join("");
-}
-
+ 
 function openProduct(id) {
   const p = products.find(item => item.id === id);
   if (!p) return;
 
   const images = getImages(p);
 
-  document.getElementById("detailCategory").textContent =
-    p.category || "";
-
-  document.getElementById("detailName").textContent =
-    p.name || "";
-
+  document.getElementById("detailCategory").textContent = p.category || "";
+  document.getElementById("detailName").textContent = p.name || "";
   document.getElementById("detailDescription").textContent =
     p.details || p.description || "";
 
   document.getElementById("detailPrice").textContent =
-    p.price !== null && p.price !== undefined ? p.price : "";
+    p.price != null ? p.price : "";
 
   document.getElementById("detailFeatures").innerHTML =
     (p.features || []).map(f => `<li>${f}</li>`).join("");
@@ -342,7 +298,6 @@ function openProduct(id) {
 
   function showImage(index) {
     if (!images[index]) return;
-
     main.src = images[index];
 
     thumbs.querySelectorAll(".thumb").forEach((button, i) => {
@@ -351,8 +306,7 @@ function openProduct(id) {
   }
 
   thumbs.innerHTML = images.map((src, i) => `
-    <button type="button"
-      class="thumb ${i === 0 ? "active" : ""}"
+    <button type="button" class="thumb ${i === 0 ? "active" : ""}"
       onclick="showProductImage(${i})">
       <img src="${src}" alt="Product image ${i + 1}">
     </button>
@@ -375,12 +329,13 @@ function openProduct(id) {
     p.saleType === "direct" ? "VIEW PRODUCT →" : "BUY NOW →";
 
   whatsapp.hidden = true;
-whatsapp.removeAttribute("href");
-  
-modal.classList.add("show");
-modal.setAttribute("aria-hidden", "false");
-document.body.style.overflow = "hidden";
-  
+  whatsapp.removeAttribute("href");
+
+  modal.classList.add("show");
+  modal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+} // نهاية openProduct
+
 function closeProduct() {
   modal.classList.remove("show");
   modal.setAttribute("aria-hidden", "true");
